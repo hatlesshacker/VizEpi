@@ -1,0 +1,49 @@
+
+body {
+    width: 100%;
+    height: 100vh;
+    background-color: #FF4B4B;
+}
+
+.country {
+    margin: 5px 5px 5px 5px;
+    height: 100%;
+    width: 100%;
+}
+
+.city {
+    position: absolute;
+    left: 25%;
+    top: 25%;
+    border: 5px dashed pink;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    /*width: 16rem;
+            height: 16rem;*/
+    width: 300px;
+    height: 300px;
+}
+
+.citizen {
+    background-color: #fff;
+    border: 1px solid pink;
+    height: 10px;
+    border-radius: 50%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    width: 10px;
+}
+
+.infected {
+    background-color: darkred;
+    border: 1px solid darkorchid;
+}
+
+.left-pane {
+    height: 90%;
+    bottom: 25%;
+    margin: 5% 1% 1% 1%;
+    border-style: dotted
+}
