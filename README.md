@@ -1,3 +1,3 @@
-#VizEpi
+# VizEpi
 
 ### Visualization of Epidemics
