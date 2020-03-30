@@ -1,6 +1,10 @@
 var global_t = 0
 var global_affected = 0
 var global_STATE = false //TRUE: RUN, FALSE: STOP
+var global_start_time;
+var global_inf_1;
+var global_inf_2;
+var global_bong_hit;
 
 function citizen_move() {
     anime({
@@ -23,6 +27,14 @@ function citizen_move() {
 function prob_infected(n) {
     return !!n && Math.random() <= n;
 };
+
+function chart_xvals() {
+    return Date.now()
+}
+
+function chart_yvals() {
+    return affected_percentage()
+}
 
 function distanceBetweenElems(elem1, elem2) {
     var pos_x_1 = elem1.position().left;
@@ -47,11 +59,15 @@ function getRandomInt(min, max) {
 
 
 function loop() {
+    if (!global_STATE) {
+        return
+    }
+
     //First run.
     if (global_t == 0) {
         setTimeout(function () {
-            $("#"+inf_1).addClass("infected")
-            $("#"+inf_2).addClass("infected")
+            $("#"+global_inf_1).addClass("infected")
+            $("#"+global_inf_2).addClass("infected")
         }, 1000)
     }
 
@@ -78,6 +94,8 @@ function loop() {
                     if (prob_infected(inf_prob)) {
                         other_citizen.addClass("infected")
                         global_affected += 1;
+                        //console.log((Date.now() - global_start_time)/1000)
+                        global_bong_hit = (Date.now() - global_start_time)/1000
                     }
                 }
             }
@@ -87,13 +105,8 @@ function loop() {
     citizen_move()
 }
 
-
-// Initialize:
-// Start with having 2 people infected.
-inf_1 = getRandomInt(1, 10);
-inf_2 = getRandomInt(1, 10);
-while (inf_2 == inf_1) {
-    inf_2 = getRandomInt(1, 10);
+function stop_loop() {
+    global_STATE = false
 }
 
 eff_radius = 0
@@ -101,19 +114,29 @@ inf_prob = 0
 
 $(document).ready(function(){
     var ctx = document.getElementById('liveChart').getContext('2d');
-    window.liveChart = new Chart(ctx, config);
     
     $("#runbutton").click(function () {
         //Button clicked. Run simulation.
-        global_STATE = true;
 
-        eff_radius = $("#radRange").val()
+        global_inf_1 = getRandomInt(1, 10);
+        global_inf_2 = getRandomInt(1, 10);
+        while (global_inf_2 == global_inf_1) {
+            global_inf_2 = getRandomInt(1, 10);
+        }
+
+        eff_radius = ($("#radRange").val())/10
         inf_prob   = $("#probRange").val()
 
-        console.log("Starting with:")
-        console.log("Efefctive radius: "+eff_radius)
-        console.log("Probablity of getting infected: "+inf_prob)
+        window.liveChart = new Chart(ctx, config);
 
-        citizen_move();
+        global_start_time = Date.now()
+
+        console.log("Efefctive radius: "+eff_radius)
+        console.log("Probablity of getting infected: "+inf_prob+ "%")
+
+        global_STATE = true;
+        loop(); //Start the loop
     })
+
+    $("#stopbutton").click(stop_loop)
 }); 
