@@ -1,5 +1,6 @@
 var global_t = 0
 var global_affected = 0
+var global_STATE = false //TRUE: RUN, FALSE: STOP
 
 function citizen_move() {
     anime({
@@ -68,8 +69,7 @@ function loop() {
         for (let i = 1; i <= 20; i++) {
             var other_citizen = $("#"+i)
             if (current_citizen == other_citizen) {
-                console.log("skip")
-                continue
+                continue //SKIP
             }
 
             dist = distanceBetweenElems(current_citizen, other_citizen)
@@ -78,7 +78,6 @@ function loop() {
                     if (prob_infected(inf_prob)) {
                         other_citizen.addClass("infected")
                         global_affected += 1;
-                        console.log(global_affected)
                     }
                 }
             }
@@ -97,82 +96,24 @@ while (inf_2 == inf_1) {
     inf_2 = getRandomInt(1, 10);
 }
 
-eff_radius = 10
-inf_prob = 0.4 // 40% chance of getting infected
-
-var chartColors = {
-	red: 'rgb(255, 99, 132)',
-	orange: 'rgb(255, 159, 64)',
-	yellow: 'rgb(255, 205, 86)',
-	green: 'rgb(75, 192, 192)',
-	blue: 'rgb(54, 162, 235)',
-	purple: 'rgb(153, 102, 255)',
-	grey: 'rgb(201, 203, 207)'
-};
-
-function affected_percentage() {
-    return (global_affected/20)*100
-}
-
-function onRefresh(chart) {
-	chart.config.data.datasets.forEach(function(dataset) {
-		dataset.data.push({
-			x: Date.now(),
-			y: affected_percentage()
-		});
-	});
-}
-
-var color = Chart.helpers.color;
-var config = {
-	type: 'line',
-	data: {
-		datasets: [{
-			label: '% of infection',
-			backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
-			borderColor: chartColors.blue,
-			fill: false,
-			cubicInterpolationMode: 'monotone',
-			data: []
-		}]
-	},
-	options: {
-		title: {
-			display: true,
-			text: 'Infection rate graph'
-		},
-		scales: {
-			xAxes: [{
-				type: 'realtime',
-				realtime: {
-					duration: 20000,
-					refresh: 1000,
-					delay: 2000,
-					onRefresh: onRefresh
-				}
-			}],
-			yAxes: [{
-				scaleLabel: {
-					display: true,
-					labelString: 'value'
-				}
-			}]
-		},
-		tooltips: {
-			mode: 'nearest',
-			intersect: false
-		},
-		hover: {
-			mode: 'nearest',
-			intersect: false
-		}
-	}
-};
-
-var colorNames = Object.keys(chartColors);
+eff_radius = 0
+inf_prob = 0
 
 $(document).ready(function(){
     var ctx = document.getElementById('liveChart').getContext('2d');
-	window.liveChart = new Chart(ctx, config);
-    citizen_move();
+    window.liveChart = new Chart(ctx, config);
+    
+    $("#runbutton").click(function () {
+        //Button clicked. Run simulation.
+        global_STATE = true;
+
+        eff_radius = $("#radRange").val()
+        inf_prob   = $("#probRange").val()
+
+        console.log("Starting with:")
+        console.log("Efefctive radius: "+eff_radius)
+        console.log("Probablity of getting infected: "+inf_prob)
+
+        citizen_move();
+    })
 }); 

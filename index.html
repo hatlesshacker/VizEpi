@@ -11,6 +11,8 @@
 	    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
       <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@1.8.0"></script>
       
+
+      <script src="index_chart_config.js"></script>
       <script src="index.js"></script>
       <link rel="stylesheet" type="text/css" href="index.css">
 
@@ -24,8 +26,19 @@
               <div class="liveChartHolder">
                 <canvas id="liveChart"></canvas>
               </div>
+              <div class="control">
+                <label for="probRange">Infection Probablity</label>
+                <input type="range" class="custom-range" id="probRange" value="60">
+
+                <label for="radRange">Effective Radius</label>
+                <input type="range" class="custom-range" id="radRange" value="10">
+
+                <button id="runbutton" style="margin: 1% 1% 1% 1%" type="button" class="btn btn-primary">Run Simulation</button>
+              </div>
             </div>
           </div>
+
+
 
           <div class="col-md-7" style="height: 100vh">
               <div class="country">
