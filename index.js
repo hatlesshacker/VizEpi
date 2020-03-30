@@ -120,12 +120,6 @@ $(document).ready(function(){
     $("#runbutton").click(function () {
         //Button clicked. Run simulation.
 
-        global_inf_1 = getRandomInt(1, 10);
-        global_inf_2 = getRandomInt(1, 10);
-        while (global_inf_2 == global_inf_1) {
-            global_inf_2 = getRandomInt(1, 10);
-        }
-
         eff_radius = ($("#radRange").val())/10
         inf_prob   = $("#probRange").val()
 
@@ -136,6 +130,12 @@ $(document).ready(function(){
         $(".citizen").each(function () {
             global_citizen_nos++;
         })
+
+        global_inf_1 = getRandomInt(1, global_citizen_nos);
+        global_inf_2 = getRandomInt(1, global_citizen_nos);
+        while (global_inf_2 == global_inf_1) {
+            global_inf_2 = getRandomInt(1, global_citizen_nos);
+        }
 
         console.log("Citizens: "+ global_citizen_nos)
         console.log("Efefctive radius: "+eff_radius)
