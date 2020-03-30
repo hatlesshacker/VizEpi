@@ -117,7 +117,7 @@ function affected_percentage() {
 function onRefresh(chart) {
 	chart.config.data.datasets.forEach(function(dataset) {
 		dataset.data.push({
-			x: global_t,
+			x: Date.now(),
 			y: affected_percentage()
 		});
 	});
