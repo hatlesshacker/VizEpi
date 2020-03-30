@@ -45,5 +45,12 @@ body {
     height: 90%;
     bottom: 25%;
     margin: 5% 1% 1% 1%;
-    border-style: dotted
+    border-style: solid;
+    background: #fff;
+}
+
+.liveChartHolder {
+    height: 40%;
+    background: azure;
+    margin: 1% 1% 1% 1%;
 }

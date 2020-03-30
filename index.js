@@ -46,8 +46,6 @@ function getRandomInt(min, max) {
 
 
 function loop() {
-    citizen_move()
-
     //First run.
     if (global_t == 0) {
         setTimeout(function () {
@@ -86,6 +84,8 @@ function loop() {
             }
         }
     });
+
+    citizen_move()
 }
 
 
@@ -117,7 +117,7 @@ function affected_percentage() {
 function onRefresh(chart) {
 	chart.config.data.datasets.forEach(function(dataset) {
 		dataset.data.push({
-			x: Date.now(),
+			x: global_t,
 			y: affected_percentage()
 		});
 	});
@@ -128,7 +128,7 @@ var config = {
 	type: 'line',
 	data: {
 		datasets: [{
-			label: '^',
+			label: '% of infection',
 			backgroundColor: color(chartColors.blue).alpha(0.5).rgbString(),
 			borderColor: chartColors.blue,
 			fill: false,
@@ -139,7 +139,7 @@ var config = {
 	options: {
 		title: {
 			display: true,
-			text: 'No. of people affected per move'
+			text: 'Infection rate graph'
 		},
 		scales: {
 			xAxes: [{
@@ -174,5 +174,5 @@ var colorNames = Object.keys(chartColors);
 $(document).ready(function(){
     var ctx = document.getElementById('liveChart').getContext('2d');
 	window.liveChart = new Chart(ctx, config);
-    loop();
+    citizen_move();
 }); 
