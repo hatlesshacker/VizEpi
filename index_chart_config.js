@@ -9,10 +9,6 @@ var chartColors = {
 	grey: 'rgb(201, 203, 207)'
 };
 
-function affected_percentage() {
-    return (global_affected/20)*100
-}
-
 function onRefresh(chart) {
 	chart.config.data.datasets.forEach(function(dataset) {
 		dataset.data.push({

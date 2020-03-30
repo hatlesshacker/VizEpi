@@ -5,6 +5,7 @@ var global_start_time;
 var global_inf_1;
 var global_inf_2;
 var global_bong_hit;
+var global_citizen_nos = 0;
 
 function citizen_move() {
     anime({
@@ -33,7 +34,7 @@ function chart_xvals() {
 }
 
 function chart_yvals() {
-    return affected_percentage()
+    return (global_affected/global_citizen_nos)*100
 }
 
 function distanceBetweenElems(elem1, elem2) {
@@ -82,7 +83,7 @@ function loop() {
         current_citizen = $("#"+citizen_id)
         // Check if others are with effective radius.
         // If yes, apply probablity distribution.
-        for (let i = 1; i <= 20; i++) {
+        for (let i = 1; i <= global_citizen_nos; i++) {
             var other_citizen = $("#"+i)
             if (current_citizen == other_citizen) {
                 continue //SKIP
@@ -94,8 +95,8 @@ function loop() {
                     if (prob_infected(inf_prob)) {
                         other_citizen.addClass("infected")
                         global_affected += 1;
-                        //console.log((Date.now() - global_start_time)/1000)
-                        global_bong_hit = (Date.now() - global_start_time)/1000
+                        console.log("HIT: "+(Date.now() - global_start_time)/1000)
+                        //global_bong_hit = (Date.now() - global_start_time)/1000
                     }
                 }
             }
@@ -106,6 +107,7 @@ function loop() {
 }
 
 function stop_loop() {
+    global_citizen_nos = 0
     global_STATE = false
 }
 
@@ -131,6 +133,11 @@ $(document).ready(function(){
 
         global_start_time = Date.now()
 
+        $(".citizen").each(function () {
+            global_citizen_nos++;
+        })
+
+        console.log("Citizens: "+ global_citizen_nos)
         console.log("Efefctive radius: "+eff_radius)
         console.log("Probablity of getting infected: "+inf_prob+ "%")
 
@@ -139,4 +146,22 @@ $(document).ready(function(){
     })
 
     $("#stopbutton").click(stop_loop)
+
+    $('#addcitizen').click(function () {
+        var current_citizen = 0
+        $(".citizen").each(function () {
+            current_citizen++;
+        })
+
+        $('.city').append(`<div class="citizen" id="`+(current_citizen+1)+`"></div>`)
+    })
+
+    $('#dropcitizen').click(function () {
+        var current_citizen = 0
+        $(".citizen").each(function () {
+            current_citizen++;
+        })
+
+        $('#'+current_citizen).remove()
+    })
 }); 
