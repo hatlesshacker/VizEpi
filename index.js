@@ -120,7 +120,7 @@ $(document).ready(function(){
     $("#runbutton").click(function () {
         //Button clicked. Run simulation.
 
-        eff_radius = ($("#radRange").val())/10
+        eff_radius = 30*($("#radRange").val())/100
         inf_prob   = $("#probRange").val()
 
         window.liveChart = new Chart(ctx, config);
