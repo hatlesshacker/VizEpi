@@ -114,7 +114,12 @@ function stop_loop() {
 eff_radius = 0
 inf_prob = 0
 
+$(window).resize(function() {
+    $('.city').height($('.city').width())
+})
+
 $(document).ready(function(){
+    $('.city').height($('.city').width())
     var ctx = document.getElementById('liveChart').getContext('2d');
     
     $("#runbutton").click(function () {
