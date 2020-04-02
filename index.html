@@ -1,79 +1,125 @@
 <html en>
-    <head>
-      <meta charset="utf-8"/>
-      <title>Epidemic</title>
 
-      <script src="thirdparty/jquery.min.js"></script>
-      <script src="thirdparty/bootstrap.min.js"></script>
-      <link rel="stylesheet" href="thirdparty/bootstrap.min.css">
-      <script src="thirdparty/anime.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/min/moment.min.js"></script>
-	    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
-      <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@1.8.0"></script>
-      
+<head>
+    <meta charset="utf-8" />
+    <title>Epidemic</title>
 
-      <script src="index_chart_config.js"></script>
-      <script src="index.js"></script>
-      <link rel="stylesheet" type="text/css" href="index.css">
+    <script src="thirdparty/jquery.min.js"></script>
+    <script src="thirdparty/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="thirdparty/bootstrap.min.css">
+    <script src="thirdparty/anime.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.24.0/min/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-streaming@1.8.0"></script>
 
-      <meta name="viewport" content="width=device-width, initial-scale=1">
-    </head>
 
-    <body>
-      <div class="container-fluid" style="height: 100vh">
-          <div class="col-md-5" style="height: 100%">
-            <div class="left-pane">
-              <div class="liveChartHolder">
-                <canvas id="liveChart"></canvas>
-              </div>
-              <div class="control">
-                <label for="probRange">Infection Probablity</label>
-                <input type="range" class="custom-range" id="probRange" value="60">
+    <script src="index_chart_config.js"></script>
+    <script src="index.js"></script>
+    <link rel="stylesheet" type="text/css" href="index.css">
 
-                <label for="radRange">Effective Radius</label>
-                <input type="range" class="custom-range" id="radRange" value="10">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-                <div class="row" style="margin: 1% 1% 1% 1%" >
-                  <button id="addcitizen" type="button" class="btn btn-primary">+</button>
-                  <button id="dropcitizen" type="button" class="btn btn-primary">-</button>
-                </div>
+    <nav class="navbar navbar-default navbar-static-top">
+        <div class="container">
+            <div class="navbar-header">
 
-                <div class="row" style="margin: 1% 1% 1% 1%" >
-                  <button id="runbutton" type="button" class="btn btn-primary">Run Simulation</button>
-                  <button id="stopbutton" type="button" class="btn btn-primary">Stop Simulation</button>
-                </div>
-              </div>
+                <!-- Collapsed Hamburger -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#app-navbar-collapse">
+                    <span class="sr-only">Toggle Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <!-- Branding Image -->
+                <a class="navbar-brand" href=".">
+                    VizEpi
+                </a>
             </div>
-          </div>
+
+            <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                <!-- Left Side Of Navbar -->
+                <ul class="nav navbar-nav">
+                    &nbsp;
+                </ul>
+
+                <!-- Right Side Of Navbar -->
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                            Modes <span class="caret"></span>
+                        </a>
+
+                        <ul class="dropdown-menu" role="menu">
+                            <li>Mode A</li>
+                            <li>Mode B</li>
+                            <li>Mode C</li>
+                            <li>Mode D</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+</head>
+
+<body>
+    <div class="container-fluid" style="height: 100vh">
+        <div class="col-md-5" style="height: 100%">
+            <div class="left-pane">
+                <div class="liveChartHolder">
+                    <canvas id="liveChart"></canvas>
+                </div>
+                <div class="control">
+                    <label for="probRange">Infection Probablity</label>
+                    <input type="range" class="custom-range" id="probRange" value="60">
+
+                    <label for="radRange">Effective Radius</label>
+                    <input type="range" class="custom-range" id="radRange" value="10">
+
+                    <div class="row" style="margin: 1% 1% 1% 1%">
+                        <button id="addcitizen" type="button" class="btn btn-primary">+</button>
+                        <button id="dropcitizen" type="button" class="btn btn-primary">-</button>
+                    </div>
+
+                    <div class="row" style="margin: 1% 1% 1% 1%">
+                        <button id="runbutton" type="button" class="btn btn-primary">Run Simulation</button>
+                        <button id="stopbutton" type="button" class="btn btn-primary">Stop Simulation</button>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 
-          <div class="col-md-7" style="height: 100vh">
-              <div class="country">
-                  <div class="city">
-                      <div class="citizen" id="1"></div>
-                      <div class="citizen" id="2"></div>
-                      <div class="citizen" id="3"></div>
-                      <div class="citizen" id="4"></div>
-                      <div class="citizen" id="5"></div>
-                      <div class="citizen" id="6"></div>
-                      <div class="citizen" id="7"></div>
-                      <div class="citizen" id="8"></div>
-                      <div class="citizen" id="9"></div>
-                      <div class="citizen" id="10"></div>
-                      <div class="citizen" id="11"></div>
-                      <div class="citizen" id="12"></div>
-                      <div class="citizen" id="13"></div>
-                      <div class="citizen" id="14"></div>
-                      <div class="citizen" id="15"></div>
-                      <div class="citizen" id="16"></div>
-                      <div class="citizen" id="17"></div>
-                      <div class="citizen" id="18"></div>
-                      <div class="citizen" id="19"></div>
-                      <div class="citizen" id="20"></div>
-                  </div>
-              </div>
-          </div>
-      </div>
-    </body>
+        <div class="col-md-7" style="height: 100vh">
+            <div class="country">
+                <div class="city">
+                    <div class="citizen" id="1"></div>
+                    <div class="citizen" id="2"></div>
+                    <div class="citizen" id="3"></div>
+                    <div class="citizen" id="4"></div>
+                    <div class="citizen" id="5"></div>
+                    <div class="citizen" id="6"></div>
+                    <div class="citizen" id="7"></div>
+                    <div class="citizen" id="8"></div>
+                    <div class="citizen" id="9"></div>
+                    <div class="citizen" id="10"></div>
+                    <div class="citizen" id="11"></div>
+                    <div class="citizen" id="12"></div>
+                    <div class="citizen" id="13"></div>
+                    <div class="citizen" id="14"></div>
+                    <div class="citizen" id="15"></div>
+                    <div class="citizen" id="16"></div>
+                    <div class="citizen" id="17"></div>
+                    <div class="citizen" id="18"></div>
+                    <div class="citizen" id="19"></div>
+                    <div class="citizen" id="20"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
 </html>
